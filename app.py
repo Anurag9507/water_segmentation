@@ -80,10 +80,17 @@ uploaded_file = st.file_uploader(
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
 
-    st.image(image, caption="Input", width="stretch")
-
     mask = predict(model, image)
+    overlay_img = overlay(image, mask)
 
-    st.image(mask, caption="Binary Mask", clamp=True)
+    # ─── Side-by-side layout ───
+    col1, col2, col3 = st.columns(3)
 
-    st.image(overlay(image, mask), caption="Overlay")
+    with col1:
+        st.image(image, caption="Input", use_container_width=True)
+
+    with col2:
+        st.image(mask, caption="Binary Mask", clamp=True, use_container_width=True)
+
+    with col3:
+        st.image(overlay_img, caption="Overlay", use_container_width=True)
