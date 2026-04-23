@@ -13,7 +13,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 def load_model():
     model = get_model()
 
-    state = torch.load("model.pth", map_location=DEVICE)
+    state = torch.load("best_model.pth", map_location=DEVICE)
 
     if isinstance(state, dict) and "model" in state:
         state = state["model"]
